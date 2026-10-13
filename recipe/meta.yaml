@@ -15,9 +15,6 @@ source:
   - url: https://pypi.org/packages/source/s/solara-server/solara_server-{{ version }}.tar.gz
     sha256: 7da336cccf4fcd20f40790afbdfe96eaa36fffdcc2dda828b858244138a4d695
     folder: solara_server
-  - url: https://pypi.org/packages/source/s/solara_assets/solara_assets-{{ version }}.tar.gz
-    sha256: 2191e72d9bd6b0f1290ba07686fb04b61b7b19c47e670b7e9f8cfd0390c1511f
-    folder: solara_assets
 
 build:
   noarch: python
@@ -145,48 +142,6 @@ outputs:
         - python {{ python_min }}
         - pip
 
-  - name: solara-assets
-    version: {{ version }}
-    build:
-      noarch: python
-      script: |
-        set -euxo pipefail
-        cd solara_assets
-        python -m pip install -vv --no-deps .
-    requirements:
-      host:
-        - python {{ python_min }}
-        - hatchling >=0.25
-        - pip
-      run:
-        - python >={{ python_min }}
-        - solara
-
-    test:
-      imports:
-        - solara_assets
-      # pip check fails, see https://github.com/conda-forge/solara-feedstock/pull/24#issuecomment-2072211293
-      # And https://github.com/pypa/pip/pull/11159
-      # commands:
-      #   - pip check
-      requires:
-        - pip
-        - python {{ python_min }}
-    about:
-      license: MIT AND BSD-3-Clause AND Apache-2.0
-      license_file:
-        - solara_assets/LICENSE
-        - solara_assets/cdn/codemirror@5.65.3/LICENSE
-        - solara_assets/cdn/@widgetti/vue-grid-layout@2.3.13-alpha.2/LICENSE
-        - solara_assets/cdn/vega-lite@5.2.0/LICENSE
-        - solara_assets/cdn/vega@5.21.0/LICENSE
-        - solara_assets/cdn/mermaid@10.8.0/LICENSE
-        - solara_assets/cdn/echarts@5.4.0/LICENSE
-        - solara_assets/cdn/echarts@5.4.0/NOTICE
-        - solara_assets/cdn/echarts@5.4.0/licenses/LICENSE-d3
-        - solara_assets/cdn/vega-embed@6.20.2/LICENSE
-
-
 about:
   home: https://github.com/widgetti/solara
   summary: 'A Pure Python, React-style Framework for Scaling Your Jupyter and Web Apps'
@@ -194,7 +149,6 @@ about:
   license_file:
     - solara/LICENSE
 #    - solara/packages/solara-widget-manager/LICENSE.voila.txt
-
 
 extra:
   feedstock-name: solara
